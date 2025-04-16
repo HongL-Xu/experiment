@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAY Donation Manager</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header__logo">
+            <img src="/static/uw-logo-gold.png" alt="UW Logo" class="header__logo-image">
+        </div>
+        <h1 class="header__title">HAY Donation Manager</h1>
+    </header>
+
+    <main class="main">
+        <div class="controls">
+            <div class="controls__filter">
+                <label for="yearFilter" class="controls__label">Filter by Year:</label>
+                <select id="yearFilter" class="controls__select">
+                    <option value="">All Years</option>
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                    <option value="2021">2021</option>
+                    <option value="2020">2020</option>
+                </select>
+            </div>
+            <div class="controls__actions">
+                <button id="refreshBtn" class="button button--secondary">Refresh Data</button>
+                <button id="addDonationBtn" class="button button--primary">Add Donation</button>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table id="donationsTable" class="table">
+                <thead>
+                    <tr>
+                        <th>Donor Name</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Note</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="donationsTableBody">
+                    <!-- Table rows will be dynamically added here -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Add Donation Form Modal -->
+        <div id="addDonationModal" class="modal">
+            <div class="modal__content">
+                <h2 class="modal__title">Add New Donation</h2>
+                <form id="addDonationForm" class="form">
+                    <div class="form__group">
+                        <label for="donorName" class="form__label">Donor Name:</label>
+                        <input type="text" id="donorName" name="donorName" required class="form__input">
+                    </div>
+                    <div class="form__group">
+                        <label for="amount" class="form__label">Amount:</label>
+                        <input type="number" id="amount" name="amount" step="0.01" required class="form__input">
+                    </div>
+                    <div class="form__group">
+                        <label for="date" class="form__label">Date:</label>
+                        <input type="date" id="date" name="date" required class="form__input">
+                    </div>
+                    <div class="form__group">
+                        <label for="note" class="form__label">Note:</label>
+                        <textarea id="note" name="note" class="form__input"></textarea>
+                    </div>
+                    <div class="form__actions">
+                        <button type="submit" class="button button--primary">Save</button>
+                        <button type="button" class="button button--secondary" onclick="closeModal()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="/static/app.js"></script>
+</body>
+</html> 
