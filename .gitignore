@@ -37,4 +37,14 @@ static/logo-generator.html
 
 # OS files
 .DS_Store
-Thumbs.db 
+Thumbs.db
+
+# Node modules
+node_modules/
+
+# Python cache
+*.pyc
+.pytest_cache/
+
+# Environment variables
+.env 

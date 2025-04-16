@@ -161,7 +161,7 @@ async function handleAddDonation(event) {
     
     const formData = new FormData(addDonationForm);
     const donation = {
-        donor_name: formData.get('donorName'),
+        donorName: formData.get('donorName'),
         amount: parseFloat(formData.get('amount')),
         date: formData.get('date'),
         note: formData.get('note')
@@ -228,7 +228,7 @@ function cancelEdit(row) {
 async function handleSave(row) {
     const cells = row.cells;
     const donation = {
-        donor_name: cells[0].querySelector('input').value,
+        donorName: cells[0].querySelector('input').value,
         amount: parseFloat(cells[1].querySelector('input').value),
         date: cells[2].querySelector('input').value,
         note: cells[3].querySelector('textarea').value
@@ -286,4 +286,24 @@ donationsTableBody.addEventListener('click', (event) => {
 });
 
 // Initialize
-handleYearFilter(); 
+handleYearFilter();
+
+// Export functions for testing
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        renderDonations,
+        handleYearFilter,
+        handleRefresh,
+        handleAddDonation,
+        handleEdit,
+        cancelEdit,
+        handleSave,
+        handleDelete,
+        openModal,
+        closeModal,
+        formatDate,
+        formatAmount,
+        createEditableCell,
+        createActionButtons
+    };
+} 

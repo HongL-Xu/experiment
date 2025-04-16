@@ -3,10 +3,15 @@ from database import Database
 from datetime import datetime
 
 app = Flask(__name__, static_folder='static')
-db = Database()
+app.config['DATABASE'] = 'hay.db'  # Default database path
+
+def get_db():
+    """Get a database instance using the current configuration."""
+    return Database(app.config['DATABASE'])
 
 @app.route('/')
 def serve_index():
+    db = get_db()
     years = db.get_available_years()
     return render_template_string('''
         <!DOCTYPE html>
@@ -98,11 +103,13 @@ def serve_index():
 @app.route('/api/years')
 def get_years():
     """Get all available years from the database."""
+    db = get_db()
     years = db.get_available_years()
     return jsonify(years)
 
 @app.route('/api/donations', methods=['GET'])
 def get_donations():
+    db = get_db()
     year = request.args.get('year', type=int)
     if year:
         donations = db.get_donations_by_year(year)
@@ -112,10 +119,11 @@ def get_donations():
 
 @app.route('/api/donations', methods=['POST'])
 def add_donation():
+    db = get_db()
     data = request.json
     try:
         donation_id = db.add_donation(
-            donor_name=data['donor_name'],
+            donor_name=data['donorName'],
             amount=float(data['amount']),
             date=data['date'],
             note=data.get('note', '')
@@ -126,11 +134,12 @@ def add_donation():
 
 @app.route('/api/donations/<int:donation_id>', methods=['PUT'])
 def update_donation(donation_id):
+    db = get_db()
     data = request.json
     try:
         success = db.update_donation(
             donation_id=donation_id,
-            donor_name=data['donor_name'],
+            donor_name=data['donorName'],
             amount=float(data['amount']),
             date=data['date'],
             note=data.get('note', '')
@@ -143,6 +152,7 @@ def update_donation(donation_id):
 
 @app.route('/api/donations/<int:donation_id>', methods=['DELETE'])
 def delete_donation(donation_id):
+    db = get_db()
     success = db.delete_donation(donation_id)
     if success:
         return jsonify({'message': 'Deleted successfully'})
